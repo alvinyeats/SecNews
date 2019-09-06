@@ -1,0 +1,287 @@
+{% extends "news_base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/dist2/vendor/highlight/highlight.github.css"/>
+    <link rel="stylesheet" href="/static/dist2/vendor/at/jquery.atwho.min.css"/>
+    <link rel="stylesheet" href="/static/dist2/styles/vul_detail_new_rightSidebar.css">
+{% endblock %}
+
+{% block active %}
+<li><a href="/news/">首页</a></li>
+<li><a href="/news/cve/">CVE漏洞</a></li>
+<li class="active"><a href="/news/cnnvd/">CNNVD漏洞</a></li>
+<li><a href="/news/paper/">安全资讯</a></li>
+{% endblock %}
+
+{% block search %}
+<li>
+    <a href="#" class="serch-icon" role="button" aria-haspopup="true"
+       aria-expanded="false"><i class="fa fa-search"></i></a>
+</li>
+<li class="search-wrapper">
+    <form class="search-form" action="/news/cnnvd/search/" method="get">
+        <input type="text" name="keywords" class="form-control" placeholder="search">
+        <i class="fa fa-search"></i>
+    </form>
+</li>
+{% endblock %}
+
+{% block content %}
+<style>
+    blockquote {
+      font-size: 12px;
+      border-left: 3px solid #B2976A;
+      color: #b2976a;
+    }
+</style>
+
+<div class="page-vul-detail-wrapper">
+    <div class="container" id="j-affix-target">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="vul-title-wrapper clearfix">
+                    <h1 class="pull-left" id="j-vul-title" data-vul-id="92576">
+                   <span class="pull-titile">
+                      {{ post.title }}
+                   </span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row a-ts">
+            <div class="col-md-8 a-st">
+                <!--漏洞基本信息 begin-->
+                <div class="bug-msg">
+                    <div class="basic-fields vul-detail-section">
+                        <h3>基本字段</h3>
+                        <span class="glyphicon glyphicon-chevron-down" id="upordown"></span>
+                    </div>
+                    <section class="vul-basic-info" id="j-vul-basic-info">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>CNNVD编号：</dt>
+                                    <dd class="text-gray">{{ post.cnnvd_id }}</dd>
+                                </dl>
+                                <dl>
+                                    <dt>CVE编号：</dt>
+                                    <dd class="text-gray">{{ post.cve_id }}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>关键字：</dt>
+                                    {% if post.key_word %}
+                                        <dd>{{ post.key_word }}</dd>
+                                    {% else %}
+                                        <dd>暂无匹配</dd>
+                                    {% endif %}
+                                </dl>
+                            </div>
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>发布时间：</dt>
+                                    <dd>{{ post.created|date:"Y-m-d" }}</dd>
+                                </dl>
+                                <dl>
+                                    <dt>更新时间：</dt>
+                                    <dd>{{ post.updated|date:"Y-m-d" }}</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!--漏洞基本信息 end-->
+
+                <!--漏洞简介 begin-->
+                <section class="vul-detail-section vul-detail-content">
+                    <div class="clearfix">
+                        <h3 class="pull-left">漏洞简介</h3>
+                    </div>
+
+                    <div class="content-holder padding-md">
+                        <div id="j-md-intro">{{ post.description }}</div>
+                    </div>
+                </section>
+                <!--漏洞简介 end-->
+
+                <!--漏洞来源 begin-->
+                <section class="vul-detail-section vul-source">
+                    <h3>来源</h3>
+                    <div class="padding-md">
+                        <div id="j-md-source">
+                            <a style="color:#b2976a;" href="{{post.origin}}" target="_blank">{{post.origin}}</a>
+                        </div>
+                    </div>
+                </section>
+                <!--漏洞来源 end-->
+            </div>
+
+            <div class="col-md-4 right-sidebar">
+                <div style="background: #fff;padding:20px;">
+                    <hr/>
+                    <!--生命线和贡献者 begin-->
+                    <section class="lifeline-and-contributor">
+                        <h3><i class="sebug-icon icon-six-angle-star"></i>生命线</h3>
+                        <ul class="list-unstyled">
+                            <li>
+                                <div class="text-center text-gray">
+                                    发现/披露了漏洞
+                                </div>
+                            </li>
+                            <li>
+                                <a class="image-wrapper" href="#">
+                                    <img src="/static/dist2/images/avatar.png " class="avatar img-circle" alt="信息安全部"/>
+                                </a>
+                                <span class="user-info">
+                                  <a class="user-name" href="#">信息安全部</a>
+                                </span>
+                                <div class="text-center text-gray">
+                                    {{ post.created|date:"Y-m-d" }}
+                                    提交了漏洞
+                                </div>
+                            </li>
+
+                            <li>
+                                <a class="image-wrapper" href="#">
+                                    <img src="/static/dist2/images/avatar.png " class="avatar img-circle" alt="信息安全部"/>
+                                </a>
+                                <span class="user-info">
+                                  <a class="user-name" href="#">信息安全部</a>
+                                </span>
+                                <div class="text-center text-gray">
+                                    {{ post.updated|date:"Y-m-d" }}
+                                    补充了漏洞详情
+                                </div>
+                            </li>
+
+                        </ul>
+                    </section>
+                    <!--生命线和贡献者 end-->
+                    <hr/>
+                    <!--关联漏洞-->
+                    <section class="lifeline-and-contributor line-spacing">
+                        <!--<h3><i class="sebug-icon icon-six-angle-star"></i></h3>-->
+                        <h3><i class="sebug-icon icon-six-angle-star"></i>相关漏洞</h3>
+                        <ul class="list-unstyled list-after">
+                            <li class="text-center">
+                                <a href="#" >敬请期待...</a>
+                            </li>
+                        </ul>
+                    </section>
+                    <!--关联漏洞 end -->
+                </div>
+
+            </div>
+        </div>
+
+        <p class="statement">&#8251;本站提供的任何内容、代码与服务仅供学习，请勿用于非法用途，否则后果自负</p>
+
+    </div>
+</div>
+    <script src="/static/dist/script/jquery.min.js"></script>
+    <script src="/static/dist2/scripts/vendor.js"></script>
+    <script src="/static/dist2/scripts/plugins.js"></script>
+    <script src="/static/dist2/scripts/index_serch.js"></script>
+    <script src="/static/dist2/scripts/main.js?v=20161228"></script>
+
+    <script src="/static/dist2/vendor/ace/src-min/ace.js"></script>
+    <script src="/static/dist2/vendor/highlight/highlight.pack.js"></script>
+    <script src="/static/dist2/vendor/marquee/marquee.js"></script>
+    <script src="/static/dist2/vendor/at/jquery.caret.min.js"></script>
+    <script src="/static/dist2/vendor/at/jquery.atwho.min.js"></script>
+
+
+    <!-- 图表功能 -->
+    <script src="/static/dist2/vendor/echarts-2.2.1/echarts-all.js"></script>
+    <script src="/static/dist2/vendor/echarts-2.2.1/blue.js"></script>
+
+    <script>
+        if($('.page-vul-detail-wrapper').size()) {
+            // echart 渲染
+            var myCharts = [];
+            $.each($('[data-type=chart]'), function (index, chart) {
+                var option = $(chart).parent().find('input').val();
+                var mychart = echarts.init(chart, window.echartsTheme);
+                mychart.setOption(eval(option));
+                myCharts.push(mychart);
+            });
+            window.onresize = function () {
+                $.each(myCharts, function (i, chart) {
+                    chart.resize();
+                });
+            };
+        }
+        <!-- 右侧栏固定 -->
+
+        $(window).width() >992? $('.right-sidebar').addClass('tag'):$('.right-sidebar').removeClass('tag');
+
+
+        <!-- 每当宽度变化就进行改变 begin-->
+        window.onresize = function () {
+            var $elm = $('.right-sidebar');
+            $(window).width() >992? $elm.addClass('tag'):$elm.removeClass('tag');
+            <!-- 标签丝带效果自适应 -->
+            ribbon();
+            widthAdaptive();
+        };
+
+        <!-- 左侧宽度自适应 begin-->
+        function widthAdaptive() {
+            var $elm = $('.right-sidebar');
+            var startPos = $elm.offset().top;
+            var leftAdaptive = $('.a-st').width()+30+$('.a-st').offset().left;
+
+            if($('.right-sidebar').hasClass('tag') == true ){
+                $(".right-nav-bottom").css("left",leftAdaptive)
+            }else if ($(window).width() < 992){
+                $elm.removeClass("right-nav-bottom")
+                $elm.removeClass("right-nav-top")
+                $elm.removeAttr('style');
+            }
+
+            $(window).scroll(function() {
+                if($('.right-sidebar').hasClass('tag') == true ){
+                    var leftHeight = $('.a-ts').height();
+                    var sidebarHeight = $elm.height();
+                    var scroll = $(window).scrollTop();
+                    var longSidebar = scroll+(sidebarHeight - 200);
+                    var shortSidebar = scroll +(sidebarHeight -200)
+
+                    function short(num) {
+                        if (scroll <= startPos) {
+                            $elm.removeClass("right-nav-bottom")
+                            $elm.removeAttr('style');
+                        }else if (num >= leftHeight){
+                            $elm.removeClass("right-nav-bottom")
+                            $elm.addClass("right-nav-top")
+                            $elm.removeAttr('style');
+                        } else{
+                            $elm.removeClass("right-nav-top")
+                            $elm.addClass("right-nav-bottom");
+                            $(".right-nav-bottom").css("left",leftAdaptive)
+                        }
+                    }
+                    sidebarHeight > 700? short(longSidebar):short(shortSidebar);
+                }
+            });
+        };
+        <!-- 左侧宽度自适应 end-->
+
+        <!-- 标签丝带效果自适应 begin -->
+        function ribbon() {
+            $elm = $('.ribbon-adaptive')
+            $(window).width() >992? $elm.addClass('ribbon-wrap'):$elm.removeClass('ribbon-wrap');
+            $(window).width() >992? $elm.removeClass('ribbon-mobile'):$elm.addClass('ribbon-mobile');
+        }
+        <!-- 标签丝带效果自适应 end-->
+        widthAdaptive()
+        ribbon()
+
+
+
+    </script>
+
+{% endblock %}

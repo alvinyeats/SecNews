@@ -1,0 +1,103 @@
+{% extends "news_base.html" %}
+
+{% block active %}
+<li><a href="/news/">首页</a></li>
+<li><a href="/news/cve/">CVE漏洞</a></li>
+<li class="active"><a href="/news/cnnvd/">CNNVD漏洞</a></li>
+<li><a href="/news/paper/">安全资讯</a></li>
+{% endblock %}
+
+{% block search %}
+<li>
+    <a href="#" class="serch-icon" role="button" aria-haspopup="true"
+       aria-expanded="false"><i class="fa fa-search"></i></a>
+</li>
+<li class="search-wrapper">
+    <form class="search-form" action="/news/cnnvd/search/" method="get">
+        <input type="text" name="keywords" class="form-control" placeholder="search">
+        <i class="fa fa-search"></i>
+    </form>
+</li>
+{% endblock %}
+
+{% block content %}
+<style>
+    .c-filter-group-meta .filter-item{
+        width: 80px;
+        margin-left: 10px;
+    }
+</style>
+
+<div class="container" style="min-height: 700px;">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="/vuldb/vulnerabilities">
+                <div class="clearfix">
+                    <h2 class="page-title pull-left">漏洞列表</h2>
+                    <!-- <section class="pull-right search-form" style="margin-top: 32px;">
+                      <input id="J-key" type="text" name="keywords" class="form-control " value=""/>
+                      <i class="fa fa-search"></i>
+                    </section> -->
+                </div>
+            </form>
+            <div class="table-responsive">
+
+                <div class="table-responsive">
+                    <table class="table sebug-table table-vul-list">
+                        <thead>
+                            <tr>
+                                <th class="td-ssv hidden-sm hidden-xs">CNNVD ID</th>
+                                <th class="td-font hidden-sm hidden-xs">关键字</th>
+                                <th class="vul-title-wrapper">漏洞标题</th>
+                                <th class="td-time hidden-sm hidden-xs">发布时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for post in post_list %}
+                            <tr>
+                                <td class="td-ssv hidden-sm hidden-xs"><a href="{% url 'cnnvd_detail' article_id=post.id %}">{{ post.cnnvd_id }}</a></td>
+                                <td class="hidden-sm hidden-xs td-font">{{ post.keyword }}</td>
+                                <td class="vul-title-wrapper"> <a href="{% url 'cnnvd_detail' article_id=post.id %}">{{ post.title }}</a></td>
+                                <td class="datetime hidden-sm hidden-xs td-time">{{ post.created|date:"Y-m-d" }}</td>
+                            </tr>
+                            {% endfor%}
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+
+            <nav class="text-center" style="margin-bottom: 30px;">
+                {% if post_list.object_list and post_list.paginator.num_pages > 1 %}
+                <ul class="pagination">
+                    <li>
+                        <span>收集到 {{ item_total }} 条结果，共 {{ post_list.paginator.num_pages }} 页...</span>
+                    </li>
+                    {% if post_list.has_previous %}
+                    <li>
+                        <a href="?keywords={{ keyword }}&page={{ post_list.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="active">
+                        <a href="?keywords={{ keyword }}&page={{ post_list.number }}">{{ post_list.number }}</a>
+                    </li>
+                    {% if post_list.has_next %}
+                    <li>
+                        <a href="?keywords={{ keyword }}&page={{ post_list.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

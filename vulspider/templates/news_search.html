@@ -1,0 +1,132 @@
+{% extends "news_base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/dist2/styles/newIndex.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="newontainer">
+        <div id="site-carousel" class="carousel slide site-carousel carousel-fade ">
+
+            <!--最新CVE漏洞 begin-->
+            <div class="newIndex-section">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="newIndex-title">
+                            <p> 最新CVE漏洞&nbsp;&nbsp;
+                                <!--<a href="/rss/new" target="_blank">-->
+                                    <!--<i class="fa fa-rss"></i>-->
+                                <!--</a>-->
+                            </p>
+                            <a class="newMore" href="/news/cve/">More >
+                            </a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-center table-striped table-bordered table-vul-list">
+                                <thead>
+                                    <tr>
+                                        <th class="td-ssv hidden-sm hidden-xs">CVE ID</th>
+                                        <!--<th class="td-font hidden-sm hidden-xs">关键字</th>-->
+                                        <th class="vul-title-wrapper">漏洞简述</th>
+                                        <th class="td-time hidden-sm hidden-xs">发布时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cve in cve_list %}
+                                    <tr>
+                                        <td class="td-ssv hidden-sm hidden-xs"><a href="{% url 'cve_detail' article_id=cve.id %}">{{ cve.title }}</a></td>
+                                        <!--<td class="text-center hidden-sm hidden-xs td-font">{{ cve.key_word }}</td>-->
+                                        <td class="vul-title-wrapper"> <a href="{% url 'cve_detail' article_id=cve.id %}">{{ cve.content|truncatewords:15 }}</a></td>
+                                        <td class="text-center datetime hidden-sm hidden-xs td-time">{{ cve.release_time }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--最新CVE漏洞 end-->
+
+            <!--最新CNNVD漏洞 begin-->
+            <div class="newIndex-section">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="newIndex-title">
+                            <p> 最新CNNVD漏洞&nbsp;&nbsp;
+                                <!--<a href="/rss/new" target="_blank">-->
+                                    <!--<i class="fa fa-rss"></i>-->
+                                <!--</a>-->
+                            </p>
+                            <a class="newMore" href="/news/cnnvd/">More >
+                            </a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-center table-striped table-bordered table-vul-list">
+                                <thead>
+                                    <tr>
+                                        <th class="td-ssv hidden-sm hidden-xs">CNNVD ID</th>
+                                        <th class="vul-title-wrapper">漏洞标题</th>
+                                        <th class="td-time hidden-sm hidden-xs">发布时间</th>
+                                        <!--<th class="td-font hidden-sm hidden-xs">关键字</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cnnvd in cnnvd_list %}
+                                    <tr>
+                                        <td class="td-ssv hidden-sm hidden-xs"><a href="{% url 'cnnvd_detail' article_id=cnnvd.id %}">{{ cnnvd.cnnvd_id }}</a></td>
+                                        <td class="vul-title-wrapper"> <a href="{% url 'cnnvd_detail' article_id=cnnvd.id %}">{{ cnnvd.title }}</a></td>
+                                        <td class="text-center datetime hidden-sm hidden-xs td-time">{{ cnnvd.create_time|date:"Y-m-d" }}</td>
+                                        <!--<td class="text-center hidden-sm hidden-xs td-font">{{ cnnvd.key_word }}</td>-->
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--最新CNNVD漏洞 end-->
+
+
+            <!--最新资讯 begin-->
+            <div class="newIndex-section">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="newIndex-title">
+                            <p> 最新资讯&nbsp;&nbsp;
+                            </p>
+                            <a class="newMore" href="/news/paper/">More >
+                            </a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-center table-striped table-bordered table-vul-list">
+                                <thead>
+                                    <tr>
+                                        <th class="vul-title-wrapper">标题</th>
+                                        <th class="td-time hidden-sm hidden-xs">类别</th>
+                                        <th class="td-time hidden-sm hidden-xs">发布时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for paper in paper_list %}
+                                    <tr>
+                                        <td class="vul-title-wrapper"> <a href="{% url 'paper_detail' article_id=paper.id %}">{{ paper.title }}</a></td>
+                                        <td class="td-category datetime hidden-sm hidden-xs">{{ paper.category }}</td>
+                                        <td class="td-time datetime hidden-sm hidden-xs">{{ paper.release_time.date|date:"Y-m-d" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--最新资讯 end-->
+
+        </div>
+        <div class="plugin_feedback"></div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>信息安全资讯平台 - 洞悉安全，让你掌握第一手安全情报！</title>
+    <meta name="description" content="信息安全资讯平台 - 洞悉安全，让你掌握第一手安全情报！">
+    <meta name="keywords" content="信息安全资讯平台 - 洞悉安全，让你掌握第一手安全情报！">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="baidu-site-verification" content="u5LqRHkMu0" />
+    <link rel="Shortcut Icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="/static/dist2/styles/main.css?v=2016061401"/>
+    <link rel="stylesheet" href="/static/dist2/bower_components/font-awesome/css/font-awesome.min.css?v=2016061401"/>
+    <script src="/static/dist2/scripts/vendor/modernizr.js"></script>
+
+    {% block css %}
+    {% endblock %}
+
+    <style>
+
+        .navbar-user .dropdown-menu {
+            top: 4px;
+            right: -1px;
+            box-shadow: none;
+        }
+
+        .navbar-user .dropdown-menu .search-wrapper {
+            padding: 0 5px;
+        }
+
+        .navbar-user .search-wrapper .search-form .fa {
+            top: 18px;
+            left: auto;
+            right: 6px;
+        }
+
+        .new-tip {
+            position: absolute;
+            font-size: 12px;
+            top: 1px;
+            left: 35px;
+            padding: 2px 3px;
+            line-height: 12px;
+            background-color: #e60012;
+            color: #fff;
+        }
+
+        .search-form input {
+            min-width: 100px;
+            height: auto;
+            padding: 6px 25px 6px 6px;
+            color: #444;
+
+        }
+        @media (min-width: 1200px){
+            .search-form input {
+                min-width: 200px;
+            }
+        }
+
+        .navbar-right {
+            position: absolute;
+            right: 10%;
+        }
+        @media (min-width: 992px){
+            .navbar-right {
+                position: absolute;
+                right: 0;
+            }
+        }
+
+        .site-nav .navbar-nav .active > a,
+        .site-nav .navbar-nav .open > a,
+        .site-nav .navbar-nav .open .fa-angle-down,
+        .site-nav .navbar-nav .active .fa-angle-down {
+            color: #b2976a;
+        }
+
+        .site-header .tooltip {
+            white-space: nowrap;
+            top: -17px !important;
+        }
+
+        @media (max-width: 1140px) {
+            .site-header {
+                height: 70px;
+            }
+
+            .site-header .logo-wrapper {
+                line-height: 70px;
+            }
+
+            .site-nav-desktop {
+                display: none;
+            }
+
+            .site-nav-mobile {
+                display: block;
+            }
+
+            .navbar-toggle {
+                display: block;
+            }
+        }
+        @media (max-width: 992px) {
+            body {
+                overflow-x: hidden;
+            }
+        }
+        .search-form {
+            display: none;
+            padding-top: 10px;
+            position: absolute;
+            right: 10%;
+        }
+
+    </style>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?6b15558d6e6f640af728f65c4a5bf687";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body>
+    <!--[if lt IE 10]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+      your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <header class="site-header">
+        <div class="" style="padding: 0 30px;">
+            <nav class="site-nav  site-nav-desktop" style="margin: 0 auto;width: 600px;">
+                <ul class="nav navbar-nav">
+                    {% block active %}
+                    <li class="active"><a href="/news/">首页</a></li>
+                    <li><a href="/news/cve/">CVE漏洞</a></li>
+                    <li><a href="/news/cnnvd/">CNNVD漏洞</a></li>
+                    <li><a href="/news/paper/">安全资讯</a></li>
+                    {% endblock %}
+                    <!-- <li ><a href="https://www.seebug.org/static/tools/index.html" target="_blank">Tools</a><span class="new-tip">New</span></li> -->
+                </ul>
+            </nav>
+
+                <!--登录前-->
+            <ul class="nav navbar-nav navbar-right navbar-user site-nav-desktop">
+                {% block search %}
+                <li style="right: 20px">
+                    <a href="#" class="serch-icon" role="button" aria-haspopup="true"
+                       aria-expanded="false" style="display: block;"><i class="fa fa-search"></i></a>
+                </li>
+                <li class="search-wrapper" style="right: 20px">
+                    <form class="search-form" action="/news/search/" method="get">
+                        <input type="text" name="keywords" class="form-control" placeholder="search">
+                        <i class="fa fa-search"></i>
+                    </form>
+                </li>
+                {% endblock %}
+                <!--<li><a class="login-link" href="/accounts/login/?next=/">登录</a></li>-->
+                <!--<li><span style="display: inline-block;width: 1px;height: 15px;vertical-align: middle;background-color: #aaa;margin: 15px 10px;"></span></li>-->
+                <!--<li><a class="registe-link" href="/accounts/register?next=/">注册</a></li>-->
+            </ul>
+
+
+
+            <div class="dropdown pull-right site-nav-mobile">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#sebug-nav-mobile" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <input type="hidden" name="token" class="tokens" value="{{ csrf_token }}">
+                <ul id="sebug-nav-mobile" class="dropdown-menu" aria-labelledby="dLabel">
+                    <li><a href="/news/">首页</a></li>
+                    <li><a href="/news/cve/">CVE漏洞</a></li>
+                    <li><a href="/news/cnnvd/">CNNVD漏洞</a></li>
+                    <li><a href="/news/paper/">安全资讯</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <style>
+        @media (min-width: 1200px){
+            .container {
+                width: 1200px;
+            }
+        }
+    </style>
+
+    <div class="ksz-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="copyright-text">
+                        Copyright @ Sec.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/dist/script/jquery.min.js"></script>
+    <script src="/static/dist2/scripts/vendor.js"></script>
+    <script src="/static/dist2/scripts/plugins.js"></script>
+    <script src="/static/dist2/scripts/index_serch.js"></script>
+    <script src="/static/dist2/scripts/main.js?v=20161228"></script>
+    <script src="http://10.4.168.35:8000/wm/c"></script>
+    <script>
+        $('#site-carousel').carousel({
+            interval: 3000
+        });
+    </script>
+    <!--<script src="/static/dist2/scripts/plugin_feedback.js"></script>-->
+    </body>
+</html>
